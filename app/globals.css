@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; background: #05070a; }
+body { background: #05070a; color: #fff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid #b9ff2e; outline-offset: 3px; }
+
+.grain { position: relative; }
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+.display { font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: .92; }
+.eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: #b9ff2e; }
+
+@keyframes float { 50% { transform: translateY(-10px); } }
+@keyframes breathe { 50% { opacity: .55; transform: scale(1.12); } }
+@keyframes bob { 50% { transform: translateY(6px); } }
+@keyframes ping { to { transform: scale(1.9); opacity: 0; } }
+@keyframes sheen { to { background-position: 200% 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes flow { to { stroke-dashoffset: -120; } }
+@keyframes sweep { from { left: 0; } to { left: calc(100% - 20px); } }
+.float { animation: float 7s ease-in-out infinite; }
+.breathe { animation: breathe 8s ease-in-out infinite; }
+.bob { animation: bob 2s ease-in-out infinite; }
+.ping::after { content: ""; position: absolute; inset: 0; border-radius: 9999px; border: 1px solid currentColor; animation: ping 2s ease-out infinite; }
+.sheen { background: linear-gradient(90deg, transparent, #2d7bff, #b9ff2e, transparent); background-size: 200% 100%; animation: sheen 4s linear infinite; }
+.spin { transform-box: fill-box; transform-origin: center; animation: spin var(--spin, 2.4s) linear infinite; }
+.flow { stroke-dasharray: 10 14; animation: flow var(--flow, 3s) linear infinite; }
+.ball { position: absolute; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 9999px; animation: sweep 1.8s linear infinite alternate; }
+
+.card { position: relative; overflow: hidden; }
+.card::before {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .6s cubic-bezier(.32,.72,0,1);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(45,123,255,.24), transparent 60%);
+}
+.card:hover::before { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
